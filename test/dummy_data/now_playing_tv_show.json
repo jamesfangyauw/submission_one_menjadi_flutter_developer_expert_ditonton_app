@@ -1,0 +1,25 @@
+{
+  "dates": {
+    "maximum": "2022-09-17",
+    "minimum": "2019-02-23"
+  },
+  "page": 1,
+  "results": [
+    {
+      "backdropPath": "/jaejUwkiejLseprjaKSpqj12jeo12.jpg",
+      "genre_ids": [31, 21, 12, 45],
+      "id": 321,
+      "original_name": "Wednesday",
+      "overview": "Having acquired the Power Stone–one of six Infinity Stones–from the planet Xandar, Thanos and his lieutenants: Ebony Maw, Cull Obsidian, Proxima Midnight, and Corvus Glaive, intercept the spaceship carrying the survivors of Asgar's destruction.[a] After subduing Thor, Thanos extracts the Space Stone from the Tesseract, overpowers the Hulk, and kills Loki. Thanos also kills Heimdall after he sends Hulk to Earth using the Bifröst. Thanos and his lieutenants leave, destroying the ship.Hulk crash-lands in the Sanctum Sanctorum in New York City, reverting to the form of Bruce Banner. He warns Stephen Strange and Wong about Thanos plan to destroy half of all life in the universe, and they recruit Tony Stark. Maw and Obsidian arrive to retrieve the Time Stone from Strange, drawing Peter Parker's attention. Maw, unable to take the Time Stone due to Strange's enchantment, captures him. Stark and Parker sneak aboard Maw's spaceship while Wong stays behind to guard the Sanctum.",
+      "popularity": 3,
+      "poster_path": "/wjsJajeiHJHsleja12Jak343Jskeoa.jpg",
+      "first_air_date": "2021-09-25",
+      "name": "Wednesday",
+      "original_language":  "en",
+      "vote_average": 8.0,
+      "vote_count": 955
+    }
+  ],
+  "total_pages": 50,
+  "total_results": 856
+}

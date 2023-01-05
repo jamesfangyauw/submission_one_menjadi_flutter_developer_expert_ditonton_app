@@ -1,0 +1,36 @@
+{
+  "backdropPath": "/jsjekejqpqPEejelQUjdlaerOJDLek8hdah934JSkl.jpg",
+  "genres": [
+    {
+      "id": 1,
+      "name": "Scie-Fict"
+    }
+  ],
+  "id": 1,
+  "original_name": "Wednesday",
+  "overview": "this_is_plot_from_Wednesday_series",
+  "popularity": 1,
+  "poster_path": "/jajeisjeJakejOeJkaejeIEjekql92jdkIEJL3.jpg",
+  "first_air_date": "2021-09-30",
+  "name": "Wednesday",
+  "original_language":  "english",
+  "vote_average": 8.0,
+  "vote_count": 956,
+  "spoken_languages": [
+    {
+      "english_name": "Wednesday",
+      "iso_639_1": "en",
+      "name": "Wednesday"
+    },
+    {
+      "english_name": "Wednesday",
+      "iso_639_1": "de",
+      "name": "der_Mittwoch"
+    },
+    {
+      "english_name": "Wednesday",
+      "iso_639_1": "es",
+      "name": "Español"
+    }
+  ]
+}
