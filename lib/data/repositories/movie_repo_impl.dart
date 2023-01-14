@@ -28,6 +28,10 @@ class MovieRepoImpl implements MovieRepository {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -39,6 +43,10 @@ class MovieRepoImpl implements MovieRepository {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -50,6 +58,10 @@ class MovieRepoImpl implements MovieRepository {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -61,6 +73,10 @@ class MovieRepoImpl implements MovieRepository {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -72,6 +88,10 @@ class MovieRepoImpl implements MovieRepository {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -83,6 +103,10 @@ class MovieRepoImpl implements MovieRepository {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -95,7 +119,7 @@ class MovieRepoImpl implements MovieRepository {
       return Left(FailureDB(e.mssg));
     } catch (e) {
       throw e;
-    }
+    } 
   }
 
   Future<Either<FailureEquitable, String>> removeWatchlist(MovieDetail themovie) async {
@@ -105,7 +129,7 @@ class MovieRepoImpl implements MovieRepository {
       return Right(theresult);
     } on ExcepDB catch (e) {
       return Left(FailureDB(e.mssg));
-    }
+    } 
   }
 
   Future<bool> isAddedToWatchlist(int idMovie) async {

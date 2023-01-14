@@ -12,12 +12,12 @@ import 'tv_show_watchlist_notifier_test.mocks.dart';
 @GenerateMocks([GetAllWatchlistTVShow])
 void main() {
   late TvShowWatchlistNotifier tvShowWatchlistNotifier;
-  late GetWatchlistTVShowMock getWatchlistTVShowMock;
+  late MockGetAllWatchlistTVShow getWatchlistTVShowMock;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    getWatchlistTVShowMock = GetWatchlistTVShowMock();
+    getWatchlistTVShowMock = MockGetAllWatchlistTVShow();
     tvShowWatchlistNotifier = TvShowWatchlistNotifier(
       getAllWatchlistTVShow: getWatchlistTVShowMock,
     )..addListener(() {

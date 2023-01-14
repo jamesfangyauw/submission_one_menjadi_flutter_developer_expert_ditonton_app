@@ -3,6 +3,9 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/com
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/constants.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/domain/entities/movie_entities.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/domain/entities/tv_entities.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/now_playing_tv_show_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/popular_tv_show_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/top_rated_tv_show_cubit.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/about_app_page.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/all_movie_detail_page.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/popular_all_movies_page.dart';
@@ -16,7 +19,11 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/pre
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/provider/all_movie_list_notifier.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/request_state_enum.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/provider/tv/tv_show_list_notifier.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_now_playing_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_popular_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_top_rated_cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -147,12 +154,17 @@ class _HomeAllTheMoviesPagesState extends State<HomeAllTheMoviesPages> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-            () => Provider.of<AllMovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies()
-    );
+    // Future.microtask(
+    //         () => Provider.of<AllMovieListNotifier>(context, listen: false)
+    //       ..fetchNowPlayingMovies()
+    //       ..fetchPopularMovies()
+    //       ..fetchTopRatedMovies()
+    // );
+    Future.microtask(() {
+      BlocProvider.of<AllTheMovieNowPlayingCubit>(context).fetchAllTheMovieNowPlayingCubit();
+      BlocProvider.of<AllTheMoviePopularCubit>(context).fetchAllThePopularMovieCubit();
+      BlocProvider.of<AllTheMovieTopRatedCubit>(context).fetchAllTheMovieTopRatedCubit();
+    });
   }
 
   @override
@@ -168,52 +180,91 @@ class _HomeAllTheMoviesPagesState extends State<HomeAllTheMoviesPages> {
               tap: () =>
                   Navigator.pushNamed(ctx, NowplayingAllMoviePage.NAME_ROUTE),
             ),
-            Consumer<AllMovieListNotifier>(builder: (cntx, dt, chld) {
-              final thestate = dt.nowPlayingState;
-              if (thestate == EnumStateRequest.DataLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (thestate == EnumStateRequest.DataLoaded) {
-                return MovieList(dt.nowPlayingMovies);
-              } else {
-                return Text('Failed');
-              }
-            }),
+            // Consumer<AllMovieListNotifier>(builder: (cntx, dt, chld) {
+            //   final thestate = dt.nowPlayingState;
+            //   if (thestate == EnumStateRequest.DataLoading) {
+            //     return Center(
+            //       child: CircularProgressIndicator(),
+            //     );
+            //   } else if (thestate == EnumStateRequest.DataLoaded) {
+            //     return MovieList(dt.nowPlayingMovies);
+            //   } else {
+            //     return Text('Failed');
+            //   }
+            // }),
+            BlocBuilder<AllTheMovieNowPlayingCubit, AllTheMovieNowPlayingState>(
+              builder: (cntxt, stt) {
+                if (stt is AllTheMovieNowPlayingLoadingState) {
+                  return const  CircularProgressIndicator();
+                } else if (stt is AllTheMovieNowPlayingLoadedState) {
+                  return MovieList(themovies : stt.movies);
+                } else if (stt is AllTheMovieNowPlayingErrorState) {
+                  return  Text(stt.mssg);
+                } else {
+                  return Container();
+                }
+              },
+            ),
             _buildSubHeading(
               ttle: POPULAR_MOVIE,
               tap: () =>
                   Navigator.pushNamed(ctx, PopularAllMoviesPage.NAME_ROUTE),
             ),
-            Consumer<AllMovieListNotifier>(builder: (cntx, dt, chld) {
-              final thestate = dt.popularMoviesState;
-              if (thestate == EnumStateRequest.DataLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (thestate == EnumStateRequest.DataLoaded) {
-                return MovieList(dt.popularMovies);
-              } else {
-                return Text('Failed');
-              }
-            }),
+            // Consumer<AllMovieListNotifier>(builder: (cntx, dt, chld) {
+            //   final thestate = dt.popularMoviesState;
+            //   if (thestate == EnumStateRequest.DataLoading) {
+            //     return Center(
+            //       child: CircularProgressIndicator(),
+            //     );
+            //   } else if (thestate == EnumStateRequest.DataLoaded) {
+            //     return MovieList(dt.popularMovies);
+            //   } else {
+            //     return Text('Failed');
+            //   }
+            // }),
+            BlocBuilder<AllTheMoviePopularCubit, AllTheMoviePopularState>(
+              builder: (context, state) {
+                if (state is AllTheMoviePopularLoadingState) {
+                  return CircularProgressIndicator();
+                } else if (state is AllTheMoviePopularLoadedState) {
+                  return MovieList(themovies : state.movies);
+                } else if (state is AllTheMoviePopularErrorState) {
+                  return Text(state.mssg);
+                } else {
+                  return Container();
+                }
+              },
+            ),
             _buildSubHeading(
               ttle: TOP_RATED_MOVIE,
               tap: () =>
                   Navigator.pushNamed(ctx, TopRatedAllMoviesPage.NAME_ROUTE),
             ),
-            Consumer<AllMovieListNotifier>(builder: (cntx, dt, chld) {
-              final thestate = dt.topRatedMoviesState;
-              if (thestate == EnumStateRequest.DataLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (thestate == EnumStateRequest.DataLoaded) {
-                return MovieList(dt.topRatedMovies);
-              } else {
-                return Text('Failed');
-              }
-            })
+            // Consumer<AllMovieListNotifier>(builder: (cntx, dt, chld) {
+            //   final thestate = dt.topRatedMoviesState;
+            //   if (thestate == EnumStateRequest.DataLoading) {
+            //     return Center(
+            //       child: CircularProgressIndicator(),
+            //     );
+            //   } else if (thestate == EnumStateRequest.DataLoaded) {
+            //     return MovieList(dt.topRatedMovies);
+            //   } else {
+            //     return Text('Failed');
+            //   }
+            // })
+            BlocBuilder<AllTheMovieTopRatedCubit, AllTheMovieTopRatedState>(
+              builder: (context, state) {
+                if (state is AllTheMovieTopRatedLoadingState) {
+                  return CircularProgressIndicator();
+                } else if (state is AllTheMovieTopRatedLoadedState) {
+                  return MovieList(themovies : state.movies);
+                } else if (state is AllTheMovieTopRatedErrorState) {
+                  return Text(state.mssg);
+                } else {
+                  return Container();
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -254,13 +305,18 @@ class _HomeAllTvShowPageState extends State<HomeAllTvShowPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-            () =>
-        Provider.of<TVShowListNotifier>(context, listen: false)
-          ..fetchNowPlayingTVShow()
-          ..fetchPopularTVShow()
-          ..fetchTopRatedTVShow()
-    );
+    // Future.microtask(
+    //         () =>
+    //     Provider.of<TVShowListNotifier>(context, listen: false)
+    //       ..fetchNowPlayingTVShow()
+    //       ..fetchPopularTVShow()
+    //       ..fetchTopRatedTVShow()
+    // );
+    Future.microtask(() {
+      BlocProvider.of<NowPlayingTVShowCubit>(context).fetchNowPlayingTVShowCubit();
+      BlocProvider.of<PopularTVShowCubit>(context).fetchPopularTVShowCubit();
+      BlocProvider.of<TopRatedTVShowCubit>(context).fetchTopRatedTVShowCubit();
+    });
   }
 
     @override
@@ -276,52 +332,91 @@ class _HomeAllTvShowPageState extends State<HomeAllTvShowPage> {
                 tap: () =>
                     Navigator.pushNamed(ctx, TvShowNowplayingPage.NAME_ROUTE),
               ),
-              Consumer<TVShowListNotifier>(builder: (cntxt, dt, chld) {
-                final thestate = dt.tvShowNowPlayingState;
-                if (thestate == EnumStateRequest.DataLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (thestate == EnumStateRequest.DataLoaded) {
-                  return TVShowList(dt.tvShowNowPlaying);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              // Consumer<TVShowListNotifier>(builder: (cntxt, dt, chld) {
+              //   final thestate = dt.tvShowNowPlayingState;
+              //   if (thestate == EnumStateRequest.DataLoading) {
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   } else if (thestate == EnumStateRequest.DataLoaded) {
+              //     return TVShowList(dt.tvShowNowPlaying);
+              //   } else {
+              //     return Text('Failed');
+              //   }
+              // }),
+              BlocBuilder<NowPlayingTVShowCubit, NowPlayingTVShowState>(
+                builder: (cntxt, stt) {
+                  if (stt is NowPlayingTVShowLoadingState) {
+                    return  CircularProgressIndicator();
+                  } else if (stt is NowPlayingTVShowLoadedState) {
+                    return TVShowList(tvShow : stt.tvShow);
+                  } else if (stt is NowPlayingTVShowErrorState) {
+                    return  Text(stt.mssg);
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
               _buildSubHeading(
                 ttle: POPULAR_TV,
                 tap: () =>
                     Navigator.pushNamed(ctx, TvShowPopularPage.NAME_ROUTE),
               ),
-              Consumer<TVShowListNotifier>(builder: (cntxt, dt, chld) {
-                final thestate = dt.tvShowpopularTVState;
-                if (thestate == EnumStateRequest.DataLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (thestate == EnumStateRequest.DataLoaded) {
-                  return TVShowList(dt.tvShowpopular);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              // Consumer<TVShowListNotifier>(builder: (cntxt, dt, chld) {
+              //   final thestate = dt.tvShowpopularTVState;
+              //   if (thestate == EnumStateRequest.DataLoading) {
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   } else if (thestate == EnumStateRequest.DataLoaded) {
+              //     return TVShowList(dt.tvShowpopular);
+              //   } else {
+              //     return Text('Failed');
+              //   }
+              // }),
+              BlocBuilder<PopularTVShowCubit, PopularTVShowState>(
+                builder: (cntxt, stt) {
+                  if (stt is PopularTVShowLoadingState) {
+                    return CircularProgressIndicator();
+                  } else if (stt is PopularTVShowLoadedState) {
+                    return TVShowList(tvShow : stt.tvShow);
+                  } else if (stt is PopularTVShowErrorState) {
+                    return Text(stt.mssg);
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
               _buildSubHeading(
                 ttle: TOP_RATED_TV,
                 tap: () =>
                     Navigator.pushNamed(ctx, TvShowTopRatedPage.NAME_ROUTE),
               ),
-              Consumer<TVShowListNotifier>(builder: (cntx, dt, chld) {
-                final thestate = dt.tvShowtopRatedTVState;
-                if (thestate == EnumStateRequest.DataLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (thestate == EnumStateRequest.DataLoaded) {
-                  return TVShowList(dt.tvShowtopRatedTV);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              // Consumer<TVShowListNotifier>(builder: (cntx, dt, chld) {
+              //   final thestate = dt.tvShowtopRatedTVState;
+              //   if (thestate == EnumStateRequest.DataLoading) {
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   } else if (thestate == EnumStateRequest.DataLoaded) {
+              //     return TVShowList(dt.tvShowtopRatedTV);
+              //   } else {
+              //     return Text('Failed');
+              //   }
+              // }),
+              BlocBuilder<TopRatedTVShowCubit, TopRatedTVShowState>(
+                builder: (context, state) {
+                  if (state is TopRatedTVShowLoadingState) {
+                    return CircularProgressIndicator();
+                  } else if (state is TopRatedTVShowLoadedState) {
+                    return TVShowList(tvShow : state.tvShow);
+                  } else if (state is TopRatedTVShowErrorState) {
+                    return  Text(state.mssg);
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -352,7 +447,8 @@ class _HomeAllTvShowPageState extends State<HomeAllTvShowPage> {
 
 class MovieList extends StatelessWidget {
   final List<Movie> themovies;
-  MovieList(this.themovies);
+  // MovieList(this.themovies);
+  const MovieList({Key? key, required this.themovies}) : super(key: key);
 
   Widget build(BuildContext ctx) {
     return Container(
@@ -392,7 +488,7 @@ class MovieList extends StatelessWidget {
 
 class TVShowList extends StatelessWidget {
   final List<TVEntities> tvShow;
-  TVShowList(this.tvShow);
+  const TVShowList({Key? key, required this.tvShow}) : super(key: key);
 
   @override
   Widget build(BuildContext ctx) {
@@ -401,7 +497,7 @@ class TVShowList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final movie = tvShow[index];
+          final allTvShow = tvShow[index];
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
@@ -409,13 +505,13 @@ class TVShowList extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   TVShowDetailPage.NAME_ROUTE,
-                  arguments: movie.idTv,
+                  arguments: allTvShow.idTv,
                 );
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$URL_BASE_IMAGE${movie.path_poster}',
+                  imageUrl: '$URL_BASE_IMAGE${allTvShow.path_poster}',
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),

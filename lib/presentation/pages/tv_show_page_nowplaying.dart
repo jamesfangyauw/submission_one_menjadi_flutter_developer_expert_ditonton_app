@@ -1,5 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/constants.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/request_state_enum.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/now_playing_tv_show_cubit.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/provider/tv/tv_show_nowplay_notifier.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,9 @@ class _TvShowNowplayingPageState extends State<TvShowNowplayingPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<TvShowNowPlayingNotifier>(context, listen: false)
-            .fetchNowPlayingtvShow());
+    Future.microtask(
+          () => BlocProvider.of<NowPlayingTVShowCubit>(context).fetchNowPlayingTVShowCubit()
+    );
   }
 
   @override
@@ -29,25 +31,32 @@ class _TvShowNowplayingPageState extends State<TvShowNowplayingPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TvShowNowPlayingNotifier>(
-          builder: (ctx, dt, chld) {
-            if (dt.tvShowState == EnumStateRequest.DataLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (dt.tvShowState == EnumStateRequest.DataLoaded) {
+        // child: Consumer<TvShowNowPlayingNotifier>(
+        //   builder: (ctx, dt, chld) {
+        //     if (dt.tvShowState == EnumStateRequest.DataLoading) {
+        //       return Center(
+        //         child: CircularProgressIndicator(),
+        //       );
+        //     } else if (dt.tvShowState == EnumStateRequest.DataLoaded) {
+        child: BlocBuilder<NowPlayingTVShowCubit, NowPlayingTVShowState>(
+          builder: (cntxt, stt) {
+            if (stt is NowPlayingTVShowLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (stt is NowPlayingTVShowLoadedState) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvShow = dt.tvShow[index];
-                  return TVCard(tvShow);
+                  final tvShow = stt.tvShow[index];
+                  return TVCardList(tvEntities : tvShow);
                 },
-                itemCount: dt.tvShow.length,
+                itemCount: stt.tvShow.length,
               );
-            } else {
+            } else if (stt is NowPlayingTVShowErrorState) {
               return Center(
-                key: Key('error_message'),
-                child: Text(dt.mssg),
-              );
+                key: const Key('error_message'),
+                child: Text(stt.mssg,
+              ));
+            } else {
+              return const SizedBox();
             }
           },
         ),

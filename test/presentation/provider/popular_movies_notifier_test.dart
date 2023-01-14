@@ -12,13 +12,13 @@ import 'popular_movies_notifier_test.mocks.dart';
 
 @GenerateMocks([GetAllPopularMovies])
 void main() {
-  late MockGetPopularMovies mockGetPopularMovies;
+  late MockGetAllPopularMovies mockGetPopularMovies;
   late AllPopularMoviesNotifier popularMoviesNotifier;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    mockGetPopularMovies = MockGetPopularMovies();
+    mockGetPopularMovies = MockGetAllPopularMovies();
     popularMoviesNotifier = AllPopularMoviesNotifier(mockGetPopularMovies)
       ..addListener(() {
         countListenerCall++;

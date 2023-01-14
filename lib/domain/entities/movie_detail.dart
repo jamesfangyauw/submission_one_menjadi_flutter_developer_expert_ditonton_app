@@ -2,19 +2,19 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/dom
 import 'package:equatable/equatable.dart';
 
 class MovieDetail extends Equatable {
-  MovieDetail({
-    required this.adultMovie,
-    required this.backdropPathMovie,
-    required this.genresMovie,
-    required this.idMovie,
-    required this.originalTitleMovie,
-    required this.overviewMovie,
-    required this.posterPathMovie,
-    required this.releaseDateMovie,
-    required this.runtimeMovie,
-    required this.titleMovie,
-    required this.voteAverageMovie,
-    required this.voteCountMovie,
+  const MovieDetail({
+     this.adultMovie = false ,
+     this.backdropPathMovie,
+     this.genresMovie = const [],
+     this.idMovie = 0,
+     this.originalTitleMovie = "",
+     this.overviewMovie = "",
+     this.posterPathMovie = "",
+     this.releaseDateMovie = "",
+     this.runtimeMovie = 0,
+     this.titleMovie = "",
+     this.voteAverageMovie = 0,
+     this.voteCountMovie = 0,
   });
 
   final bool adultMovie;

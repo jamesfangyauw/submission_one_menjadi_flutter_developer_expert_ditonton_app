@@ -13,7 +13,7 @@ class TVShowDetailNotifier extends ChangeNotifier {
   static const watchlistTvShowAddSuccessMessage = 'Added to Watchlist';
   static const watchlistTvShowRemoveSuccessMessage = 'Removed from Watchlist';
 
-  final GetTVShowRecommendations getAllTVShowRecommendations;
+  final GetAllTVShowRecommendations getAllTVShowRecommendations;
   final RemoveAllWatchlistTVShow removeAllTvShowWatchlist;
   final GetAllWatchListStatusTVShow getAllTVShowWatchListStatus;
   final GetAllTVShowDetail getAllTVShowDetail;

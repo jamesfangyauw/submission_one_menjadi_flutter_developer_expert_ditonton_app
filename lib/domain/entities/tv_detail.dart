@@ -2,32 +2,32 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/dom
 import 'package:equatable/equatable.dart';
 
 class TVShowDetail extends Equatable {
-  TVShowDetail({
-    required this.tvBckdropPath,
-    required this.tv_first_release,
-    required this.tvGenres,
-    required this.tvShowId,
-    required this.tv_show_originame,
-    required this.tv_show_name,
-    required this.origlanguage_tv_show,
-    required this.tvShowOverview,
-    required this.tvShowPopularityPublic,
-    required this.tv_show_pstrpath,
-    required this.tv_show_voteAvg,
-    required this.tv_show_voteCnt
+  const TVShowDetail({
+     this.tvBckdropPath,
+     this.tv_first_release='',
+     this.tvGenres=const[],
+     this.tvShowId=0,
+     this.tv_show_originame='',
+     this.tv_show_name='',
+     this.origlanguage_tv_show='',
+     this.tvShowOverview='',
+     this.tvShowPopularityPublic=0,
+     this.tv_show_pstrpath='',
+     this.tv_show_voteAvg=0,
+     this.tv_show_voteCnt
   });
-  String? tvBckdropPath;
-  String tv_first_release;
-  List<GenreEntities> tvGenres;
-  int tvShowId;
-  String tv_show_originame;
-  String tv_show_name;
-  String origlanguage_tv_show;
-  String tvShowOverview;
-  double tvShowPopularityPublic;
-  String tv_show_pstrpath;
-  double tv_show_voteAvg;
-  int? tv_show_voteCnt;
+  final String? tvBckdropPath;
+  final String tv_first_release;
+  final List<GenreEntities> tvGenres;
+  final int tvShowId;
+  final String tv_show_originame;
+  final String tv_show_name;
+  final String origlanguage_tv_show;
+  final String tvShowOverview;
+  final double tvShowPopularityPublic;
+  final String tv_show_pstrpath;
+  final double tv_show_voteAvg;
+  final int? tv_show_voteCnt;
   List<Object?> get props => [
         tvBckdropPath,
         tv_first_release,

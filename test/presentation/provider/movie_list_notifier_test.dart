@@ -15,16 +15,16 @@ import 'movie_list_notifier_test.mocks.dart';
 @GenerateMocks([GetAllNowPlayingMovies, GetAllPopularMovies, GetAllTopRatedMovies])
 void main() {
   late AllMovieListNotifier movieListNotifier;
-  late MockGetNowPlayingMovies mockGetNowPlayingMovies;
-  late MockGetPopularMovies mockGetPopularMovies;
-  late MockGetTopRatedMovies mockGetTopRatedMovies;
+  late MockGetAllNowPlayingMovies mockGetNowPlayingMovies;
+  late MockGetAllPopularMovies mockGetPopularMovies;
+  late MockGetAllTopRatedMovies mockGetTopRatedMovies;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    mockGetNowPlayingMovies = MockGetNowPlayingMovies();
-    mockGetPopularMovies = MockGetPopularMovies();
-    mockGetTopRatedMovies = MockGetTopRatedMovies();
+    mockGetNowPlayingMovies = MockGetAllNowPlayingMovies();
+    mockGetPopularMovies = MockGetAllPopularMovies();
+    mockGetTopRatedMovies = MockGetAllTopRatedMovies();
     movieListNotifier = AllMovieListNotifier(
       getNowPlayingMovies: mockGetNowPlayingMovies,
       getPopularMovies: mockGetPopularMovies,

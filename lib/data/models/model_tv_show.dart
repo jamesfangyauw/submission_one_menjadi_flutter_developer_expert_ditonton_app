@@ -3,19 +3,19 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/dom
 import 'package:equatable/equatable.dart';
 
 class ModelTVShow extends Equatable {
-  @immutable ModelTVShow({
-    required this.pathBackdrop,
-    required this.date_first_show,
-    required this.genreIdTv,
-    required this.idTv,
-    required this.name_origin,
-    required this.nameTv,
-    required this.language_origin,
-    required this.overview_tv,
-    required this.tv_popularity,
-    required this.path_poster,
-    required this.average_vote,
-    required this.count_vote
+  @immutable  const ModelTVShow({
+     this.pathBackdrop,
+     this.date_first_show,
+     this.genreIdTv=const[],
+     this.idTv=0,
+     this.name_origin,
+     this.nameTv,
+     this.language_origin,
+     this.overview_tv='',
+     this.tv_popularity=0,
+     this.path_poster,
+     this.average_vote=0,
+     this.count_vote
   });
 
   final String? pathBackdrop;

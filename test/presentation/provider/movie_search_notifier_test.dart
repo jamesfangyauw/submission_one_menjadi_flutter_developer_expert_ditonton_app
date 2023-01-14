@@ -13,12 +13,12 @@ import 'movie_search_notifier_test.mocks.dart';
 @GenerateMocks([SearchAllMovies])
 void main() {
   late All_MovieSearchNotifier movieSearchNotifier;
-  late MockSearchMovies mockSearchMovies;
+  late MockSearchAllMovies mockSearchMovies;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    mockSearchMovies = MockSearchMovies();
+    mockSearchMovies = MockSearchAllMovies();
     movieSearchNotifier = All_MovieSearchNotifier(searchMovies: mockSearchMovies)
       ..addListener(() {
         countListenerCall += 1;

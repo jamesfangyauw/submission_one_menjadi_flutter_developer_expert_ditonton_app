@@ -7,17 +7,18 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/pre
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'tv_show_list_notifier_test.mocks.dart';
 
-@GenerateMocks([GetTopRatedTV])
+import 'tv_show_top_rated_notifier_test.mocks.dart';
+
+@GenerateMocks([GetTopRatedTVShow])
 void main() {
-  late GetTopRatedTVShowMock getTopRatedTVShowMock;
+  late MockGetTopRatedTV getTopRatedTVShowMock;
   late TvShowTopRatedNotifier tvShowTopRatedNotifier;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    getTopRatedTVShowMock = GetTopRatedTVShowMock();
+    getTopRatedTVShowMock = MockGetTopRatedTV();
     tvShowTopRatedNotifier = TvShowTopRatedNotifier(getTopRatedTVShow: getTopRatedTVShowMock)
       ..addListener(() {
         countListenerCall++;

@@ -5,12 +5,12 @@ import 'package:mockito/mockito.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late GetAllWatchListTvShowStatus theusecase;
+  late GetAllWatchListTheMoviesStatus theusecase;
   late AllMovieRepoMock allMoviesRepoMock;
 
   setUp(() {
     allMoviesRepoMock = AllMovieRepoMock();
-    theusecase = GetAllWatchListTvShowStatus(allMoviesRepoMock);
+    theusecase = GetAllWatchListTheMoviesStatus(allMoviesRepoMock);
   });
 
   test('should get watchlist status from repository', () async {

@@ -11,13 +11,13 @@ import 'tv_show_popular_notifier_test.mocks.dart';
 
 @GenerateMocks([GetAllPopularTVShow])
 void main() {
-  late GetPopularTVShowMock getPopularTVShowMock;
+  late MockGetAllPopularTVShow getPopularTVShowMock;
   late TvShowPopularNotifier notifier;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    getPopularTVShowMock= GetPopularTVShowMock();
+    getPopularTVShowMock= MockGetAllPopularTVShow();
     notifier = TvShowPopularNotifier(getPopularTVShowMock)
       ..addListener(() {
         countListenerCall++;

@@ -1,8 +1,25 @@
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/constants.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/search_all_the_movies_bloc.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/search_tv_show_bloc.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/detail_tv_show_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/now_playing_tv_show_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/popular_tv_show_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/recommendations_tv_show_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/top_rated_tv_show_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/watchlist_tv_show_cubit.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/popular_all_movies_page.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/tv_show_page_popular.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/search_movie_tv_show_page.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/utils.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_details_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_now_playing_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_popular_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_recommendations_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_top_rated_cubit.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_watchlist_cubit.dart';
+import 'common/http_ssl_pinning.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/about_app_page.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/all_movie_detail_page.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/home_tv_show_movie_page.dart';
@@ -31,9 +48,13 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/com
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/injection.dart' as di;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HttpSSLPning.init();
+  await initializeDateFormatting();
   di.init();
   runApp(DitontonApp());
 }
@@ -42,49 +63,94 @@ class DitontonApp extends StatelessWidget {
   Widget build(BuildContext ctx) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<AllMovieListNotifier>(),
+        BlocProvider<AllTheMovieWatchlistCubit>(
+          create: (context) => di.locatorMovieTv<AllTheMovieWatchlistCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<AllMovieDetailNotifier>(),
+        BlocProvider<AllTheMovieNowPlayingCubit>(
+          create: (context) => di.locatorMovieTv<AllTheMovieNowPlayingCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<All_MovieSearchNotifier>(),
+        BlocProvider<AllTheMoviePopularCubit>(
+          create: (context) => di.locatorMovieTv<AllTheMoviePopularCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TopRatedMoviesNotifier>(),
+        BlocProvider<AllTheMovieTopRatedCubit>(
+          create: (context) => di.locatorMovieTv<AllTheMovieTopRatedCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<AllPopularMoviesNotifier>(),
+        BlocProvider<AllTheMovieRecommendationsCubit>(
+          create: (context) => di.locatorMovieTv<AllTheMovieRecommendationsCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<WatchlistMovieNotifier>(),
+        BlocProvider<AllTheMovieDetailCubit>(
+          create: (context) => di.locatorMovieTv<AllTheMovieDetailCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<NowPlayingAllMoviesNotifier>(),
+        BlocProvider(
+          create: (context) => di.locatorMovieTv<SearchAllTheMoviesBloc>(),
         ),
+
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locatorMovieTv<AllMovieListNotifier>(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locatorMovieTv<AllMovieDetailNotifier>(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locatorMovieTv<All_MovieSearchNotifier>(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locatorMovieTv<TopRatedMoviesNotifier>(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locatorMovieTv<AllPopularMoviesNotifier>(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locatorMovieTv<WatchlistMovieNotifier>(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locatorMovieTv<NowPlayingAllMoviesNotifier>(),
+        // ),
+
+        BlocProvider<WatchlistTVShowCubit>(
+          create: (context) => di.locatorMovieTv<WatchlistTVShowCubit>(),
+        ),
+        BlocProvider<NowPlayingTVShowCubit>(
+          create: (context) => di.locatorMovieTv<NowPlayingTVShowCubit>(),
+        ),
+        BlocProvider<PopularTVShowCubit>(
+          create: (context) => di.locatorMovieTv<PopularTVShowCubit>(),
+        ),
+        BlocProvider<TopRatedTVShowCubit>(
+          create: (context) => di.locatorMovieTv<TopRatedTVShowCubit>(),
+        ),
+        BlocProvider<RecommendationsTVShowCubit>(
+          create: (context) => di.locatorMovieTv<RecommendationsTVShowCubit>(),
+        ),
+        BlocProvider<DetailTVShowCubit>(
+          create: (context) => di.locatorMovieTv<DetailTVShowCubit>(),
+        ),
+        BlocProvider<SearchTVShowBloc>(
+          create: (context) => di.locatorMovieTv<SearchTVShowBloc>(),
+        ),
+
       //  TV Series
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TVShowListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TVShowDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TVShowSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TvShowTopRatedNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TvShowPopularNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TvShowWatchlistNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locatorMovieTv<TvShowNowPlayingNotifier>(),
-        ),
+      //   ChangeNotifierProvider(
+      //     create: (_) => di.locatorMovieTv<TVShowListNotifier>(),
+      //   ),
+      //   ChangeNotifierProvider(
+      //     create: (_) => di.locatorMovieTv<TVShowDetailNotifier>(),
+      //   ),
+      //   ChangeNotifierProvider(
+      //     create: (_) => di.locatorMovieTv<TVShowSearchNotifier>(),
+      //   ),
+      //   ChangeNotifierProvider(
+      //     create: (_) => di.locatorMovieTv<TvShowTopRatedNotifier>(),
+      //   ),
+      //   ChangeNotifierProvider(
+      //     create: (_) => di.locatorMovieTv<TvShowPopularNotifier>(),
+      //   ),
+      //   ChangeNotifierProvider(
+      //     create: (_) => di.locatorMovieTv<TvShowWatchlistNotifier>(),
+      //   ),
+      //   ChangeNotifierProvider(
+      //     create: (_) => di.locatorMovieTv<TvShowNowPlayingNotifier>(),
+      //   ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo App',
@@ -124,7 +190,7 @@ class DitontonApp extends StatelessWidget {
             case AllMovieDetailPage.NAME_ROUTE:
               final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => AllMovieDetailPage(idtv: id),
+                builder: (_) => AllMovieDetailPage(idMovie: id),
                 settings: settings,
               );
             case SearchMovieTvShowPage.NAME_ROUTE:

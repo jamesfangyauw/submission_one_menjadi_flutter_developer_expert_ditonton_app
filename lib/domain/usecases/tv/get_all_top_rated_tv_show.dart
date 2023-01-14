@@ -3,9 +3,9 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/com
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/domain/entities/tv_entities.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/domain/repositories/tv_show_repo.dart';
 
-class GetTopRatedTV {
+class GetTopRatedTVShow {
   final TVShowRepo tvShowRepo;
-  GetTopRatedTV(this.tvShowRepo);
+  GetTopRatedTVShow(this.tvShowRepo);
 
   Future<Either<FailureEquitable, List<TVEntities>>> execute() {
     return tvShowRepo.getAllTopRatedTVShow();

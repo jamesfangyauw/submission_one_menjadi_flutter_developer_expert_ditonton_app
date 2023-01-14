@@ -7,12 +7,12 @@ import 'package:mockito/mockito.dart';
 import '../../../helpers/test_helper_tv_show.mocks.dart';
 
 void main() {
-  late GetTopRatedTV getTopRatedTvShow;
+  late GetTopRatedTVShow getTopRatedTvShow;
   late TvShowRepoMock tVShowRepositoryMock;
 
   setUp(() {
     tVShowRepositoryMock = TvShowRepoMock();
-    getTopRatedTvShow = GetTopRatedTV(tVShowRepositoryMock);
+    getTopRatedTvShow = GetTopRatedTVShow(tVShowRepositoryMock);
   });
 
   final testTVShow = <TVEntities>[];

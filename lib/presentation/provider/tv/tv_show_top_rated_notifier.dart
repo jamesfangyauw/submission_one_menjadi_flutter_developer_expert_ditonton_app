@@ -4,7 +4,7 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/dom
 import 'package:flutter/foundation.dart';
 
 class TvShowTopRatedNotifier extends ChangeNotifier {
-  final GetTopRatedTV getTopRatedTVShow;
+  final GetTopRatedTVShow getTopRatedTVShow;
 
   TvShowTopRatedNotifier({required this.getTopRatedTVShow});
 

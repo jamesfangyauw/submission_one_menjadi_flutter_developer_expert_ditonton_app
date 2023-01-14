@@ -16,12 +16,12 @@ import '../../helpers/test_helper.mocks.dart';
 
 void main() {
   late MovieRepoImpl movieRepoImpl;
-  late TheMovieRemoteDSMock theMovieRemoteDSMock;
-  late TheMovieLocalDSMock theMovieLocalDSMock;
+  late MockMovieRemoteDS theMovieRemoteDSMock;
+  late MockMovieLocalDS theMovieLocalDSMock;
 
   setUp(() {
-    theMovieRemoteDSMock = TheMovieRemoteDSMock();
-    theMovieLocalDSMock = TheMovieLocalDSMock();
+    theMovieRemoteDSMock = MockMovieRemoteDS();
+    theMovieLocalDSMock = MockMovieLocalDS();
     movieRepoImpl = MovieRepoImpl(
       movieRemoteDS: theMovieRemoteDSMock,
       movieLocalDS: theMovieLocalDSMock,
@@ -107,6 +107,19 @@ void main() {
       expect(theResult,
           equals(Left(FailureConnection('Failed to connect to the network'))));
     });
+
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(theMovieRemoteDSMock.getNowPlayingAllMovies())
+              .thenThrow(TlsException());
+          // act
+          final result = await movieRepoImpl.getNowPlayingMovies();
+          // assert
+          verify(theMovieRemoteDSMock.getNowPlayingAllMovies());
+          expect(result, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Popular Movies', () {
@@ -147,6 +160,19 @@ void main() {
       expect(
           theResult, Left(FailureConnection('Failed to connect to the network')));
     });
+
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(theMovieRemoteDSMock.getPopularAllMovies())
+              .thenThrow(TlsException());
+          // act
+          final theresult = await movieRepoImpl.getPopularMovies();
+          // assert
+          verify(theMovieRemoteDSMock.getPopularAllMovies());
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Top Rated Movies', () {
@@ -186,6 +212,19 @@ void main() {
       expect(
           theResult, Left(FailureConnection('Failed to connect to the network')));
     });
+
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(theMovieRemoteDSMock.getTopRatedAllMovies())
+              .thenThrow(TlsException());
+          // act
+          final theresult = await movieRepoImpl.getTopRatedMovies();
+          // assert
+          verify(theMovieRemoteDSMock.getTopRatedAllMovies());
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Get Movie Detail', () {
@@ -253,6 +292,18 @@ void main() {
       expect(theResult,
           equals(Left(FailureConnection('Failed to connect to the network'))));
     });
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(theMovieRemoteDSMock.getMoviesDetail(tId))
+              .thenThrow(TlsException());
+          // act
+          final theresult = await movieRepoImpl.getMovieDetail(tId);
+          // assert
+          verify(theMovieRemoteDSMock.getMoviesDetail(tId));
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Get Movie Recommendations', () {
@@ -299,6 +350,18 @@ void main() {
       expect(theResult,
           equals(Left(FailureConnection('Failed to connect to the network'))));
     });
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(theMovieRemoteDSMock.getAllMovieRecommendations(tId))
+              .thenThrow(TlsException());
+          // act
+          final theresult = await movieRepoImpl.getMovieRecommendations(tId);
+          // assert
+          verify(theMovieRemoteDSMock.getAllMovieRecommendations(tId));
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Seach Movies', () {
@@ -340,6 +403,18 @@ void main() {
       expect(
           theResult, Left(FailureConnection('Failed to connect to the network')));
     });
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(theMovieRemoteDSMock.searchTheMovies(tQuery))
+              .thenThrow(TlsException());
+          // act
+          final theresult = await movieRepoImpl.searchMovies(tQuery);
+          // assert
+          verify(theMovieRemoteDSMock.searchTheMovies(tQuery));
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('save watchlist', () {
@@ -362,6 +437,7 @@ void main() {
       // assert
       expect(theResult, Left(FailureDB('Failed to add watchlist')));
     });
+
   });
 
   group('remove watchlist', () {

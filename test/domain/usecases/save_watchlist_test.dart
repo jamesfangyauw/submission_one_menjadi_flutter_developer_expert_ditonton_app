@@ -7,12 +7,12 @@ import '../../dummy_data/dummy_objects.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late SaveAllWatchlistTvShow theusecase;
+  late SaveAllWatchListTheMovies theusecase;
   late AllMovieRepoMock mockMoviesRepository;
 
   setUp(() {
     mockMoviesRepository = AllMovieRepoMock();
-    theusecase = SaveAllWatchlistTvShow(mockMoviesRepository);
+    theusecase = SaveAllWatchListTheMovies(mockMoviesRepository);
   });
 
   test('should save movie to the repository', () async {

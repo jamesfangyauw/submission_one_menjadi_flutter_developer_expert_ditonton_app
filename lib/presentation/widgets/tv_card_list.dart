@@ -5,10 +5,10 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/dom
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/tv_show_detail_page.dart';
 import 'package:flutter/material.dart';
 
-class TVCard extends StatelessWidget {
+class TVCardList extends StatelessWidget {
   final TVEntities tvEntities;
-
-  TVCard(this.tvEntities);
+  const TVCardList({Key? key, required this.tvEntities}) : super(key: key);
+  // TVCard(this.tvEntities);
 
   @override
   Widget build(BuildContext cntx) {

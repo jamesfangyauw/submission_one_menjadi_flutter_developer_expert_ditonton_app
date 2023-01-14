@@ -12,19 +12,20 @@ import 'package:mockito/mockito.dart';
 
 import 'tv_show_list_notifier_test.mocks.dart';
 
-@GenerateMocks([GetAllNowPlayingTVShow, GetAllPopularTVShow, GetTopRatedTV])
+
+@GenerateMocks([GetAllNowPlayingTVShow, GetAllPopularTVShow, GetTopRatedTVShow])
 void main() {
   late TVShowListNotifier tvShowListNotifier;
-  late GetNowPlayingTVShowMock getNowPlayingTVShowMock;
-  late GetPopularTVShowMock getPopularTVShowMock;
-  late GetTopRatedTVShowMock getTopRatedTVShowMock;
+  late MockGetAllNowPlayingTVShow getNowPlayingTVShowMock;
+  late MockGetAllPopularTVShow getPopularTVShowMock;
+  late MockGetTopRatedTV getTopRatedTVShowMock;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    getNowPlayingTVShowMock = GetNowPlayingTVShowMock();
-    getPopularTVShowMock = GetPopularTVShowMock();
-    getTopRatedTVShowMock = GetTopRatedTVShowMock();
+    getNowPlayingTVShowMock = MockGetAllNowPlayingTVShow();
+    getPopularTVShowMock = MockGetAllPopularTVShow();
+    getTopRatedTVShowMock = MockGetTopRatedTV();
     tvShowListNotifier = TVShowListNotifier(
       getAllNowPlayingTVShow: getNowPlayingTVShowMock,
       getAllPopularTVShow: getPopularTVShowMock,

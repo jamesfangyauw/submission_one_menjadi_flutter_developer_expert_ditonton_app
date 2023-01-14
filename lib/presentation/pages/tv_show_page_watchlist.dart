@@ -1,6 +1,8 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/constants.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/request_state_enum.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/utils.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/tv/watchlist_tv_show_cubit.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/provider/tv/tv_show_watchlist_notifier.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +20,12 @@ class _TvShowWatchlistPageState extends State<TvShowWatchlistPage>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<TvShowWatchlistNotifier>(context, listen: false)
-            .fetchWatchlistTVShow());
+    // Future.microtask(() =>
+    //     Provider.of<TvShowWatchlistNotifier>(context, listen: false)
+    //         .fetchWatchlistTVShow());
+    Future.microtask(
+          () => BlocProvider.of<WatchlistTVShowCubit>(context).fetchWatchlistTVShowCubit(),
+    );
   }
 
   @override
@@ -30,8 +35,9 @@ class _TvShowWatchlistPageState extends State<TvShowWatchlistPage>
   }
 
   void didPopNext() {
-    Provider.of<TvShowWatchlistNotifier>(context, listen: false)
-        .fetchWatchlistTVShow();
+    // Provider.of<TvShowWatchlistNotifier>(context, listen: false)
+    //     .fetchWatchlistTVShow();
+    BlocProvider.of<WatchlistTVShowCubit>(context).fetchWatchlistTVShowCubit();
   }
 
   @override
@@ -42,25 +48,32 @@ class _TvShowWatchlistPageState extends State<TvShowWatchlistPage>
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TvShowWatchlistNotifier>(
-          builder: (ctx, dt, chld) {
-            if (dt.tvShowwatchlistState == EnumStateRequest.DataLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (dt.tvShowwatchlistState == EnumStateRequest.DataLoaded) {
+        // child: Consumer<TvShowWatchlistNotifier>(
+        //   builder: (ctx, dt, chld) {
+        //     if (dt.tvShowwatchlistState == EnumStateRequest.DataLoading) {
+        //       return Center(
+        //         child: CircularProgressIndicator(),
+        //       );
+        //     } else if (dt.tvShowwatchlistState == EnumStateRequest.DataLoaded) {
+        child: BlocBuilder<WatchlistTVShowCubit, WatchlistTVShowState>(
+          builder: (cntx, stt) {
+            if (stt is WatchlistLoadingTVShowState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (stt is WatchlistTVShowLoadedState) {
               return ListView.builder(
                 itemBuilder: (cntxt, idx) {
-                  final movie = dt.tvShowWatchlist[idx];
-                  return TVCard(movie);
+                  final tvShow = stt.tvShow[idx];
+                  return TVCardList(tvEntities: tvShow);
                 },
-                itemCount: dt.tvShowWatchlist.length,
+                itemCount: stt.tvShow.length,
+              );
+            } else if (stt is WatchlistTVShowErrorState){
+              return Center(
+                key: const Key('error_message'),
+                child: Text(stt.mssg),
               );
             } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(dt.mssg),
-              );
+              return Container();
             }
           },
         ),

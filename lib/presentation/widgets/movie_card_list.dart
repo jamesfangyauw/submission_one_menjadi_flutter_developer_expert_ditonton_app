@@ -5,10 +5,10 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/dom
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/pages/all_movie_detail_page.dart';
 import 'package:flutter/material.dart';
 
-class MovieCard extends StatelessWidget {
+class MovieCardList extends StatelessWidget {
   final Movie themovie;
 
-  MovieCard(this.themovie);
+  const MovieCardList({Key? key, required this.themovie}) : super(key: key);
 
   @override
   Widget build(BuildContext ctx) {

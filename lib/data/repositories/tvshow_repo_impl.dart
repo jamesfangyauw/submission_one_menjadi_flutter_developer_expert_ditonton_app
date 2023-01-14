@@ -29,6 +29,10 @@ class TVShowRepoImpl implements TVShowRepo {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -41,6 +45,10 @@ class TVShowRepoImpl implements TVShowRepo {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -53,6 +61,10 @@ class TVShowRepoImpl implements TVShowRepo {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -65,6 +77,10 @@ class TVShowRepoImpl implements TVShowRepo {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -77,6 +93,10 @@ class TVShowRepoImpl implements TVShowRepo {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 
@@ -89,6 +109,10 @@ class TVShowRepoImpl implements TVShowRepo {
       return Left(FailureServer(''));
     } on SocketException {
       return Left(FailureConnection(FAILED_NETWORK));
+    } on TlsException catch (e) {
+      return Left(FailureCommon('Certificated is not valid\n${e.message}'));
+    } catch (e) {
+      return Left(FailureCommon(e.toString()));
     }
   }
 

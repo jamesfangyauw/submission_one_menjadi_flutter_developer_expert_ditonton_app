@@ -8,10 +8,10 @@ import '../../helpers/test_helper_tv_show.mocks.dart';
 
 void main() {
   late TVLocalDataSourceImpl tvShowLocalDataSourceImpl;
-  late DBHelperMock tvShowDBHelperMock;
+  late MockDBHelper tvShowDBHelperMock;
 
   setUp(() {
-    tvShowDBHelperMock = DBHelperMock();
+    tvShowDBHelperMock = MockDBHelper();
     tvShowLocalDataSourceImpl = TVLocalDataSourceImpl(dbHelper: tvShowDBHelperMock);
   });
 

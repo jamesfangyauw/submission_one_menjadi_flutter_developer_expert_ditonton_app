@@ -14,12 +14,12 @@ import '../../helpers/test_helper_tv_show.mocks.dart';
 
 void main() {
   late TVShowRepoImpl mockTvShowRepoImpl;
-  late TVShowRemoteDSMock mockTvShowRemoteDataSource;
-  late TVShowLocalDSMock mockTvShowLocalDataSource;
+  late MockTVRemoteDS mockTvShowRemoteDataSource;
+  late MockTVLocalDS mockTvShowLocalDataSource;
 
   setUp(() {
-    mockTvShowRemoteDataSource = TVShowRemoteDSMock();
-    mockTvShowLocalDataSource = TVShowLocalDSMock();
+    mockTvShowRemoteDataSource = MockTVRemoteDS();
+    mockTvShowLocalDataSource = MockTVLocalDS();
     mockTvShowRepoImpl = TVShowRepoImpl(
       tvRemoteDS: mockTvShowRemoteDataSource,
       tvLocalDS: mockTvShowLocalDataSource,
@@ -102,6 +102,18 @@ void main() {
       expect(theresult,
           equals(Left(FailureConnection('Failed to connect to the network'))));
     });
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(mockTvShowRemoteDataSource.getNowPlayingTVShow())
+              .thenThrow(TlsException());
+          // act
+          final theresult = await mockTvShowRepoImpl.getNowPlayingAllTVShow();
+          // assert
+          verify(mockTvShowRemoteDataSource.getNowPlayingTVShow());
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Popular TV Show', () {
@@ -140,6 +152,18 @@ void main() {
       expect(
           theresult, Left(FailureConnection('Failed to connect to the network')));
     });
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(mockTvShowRemoteDataSource.getPopularTVShow())
+              .thenThrow(TlsException());
+          // act
+          final theresult = await mockTvShowRepoImpl.getPopularAllTVShow();
+          // assert
+          verify(mockTvShowRemoteDataSource.getPopularTVShow());
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Top Rated TV Show', () {
@@ -178,6 +202,18 @@ void main() {
       expect(
           theresult, Left(FailureConnection('Failed to connect to the network')));
     });
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(mockTvShowRemoteDataSource.getTopRatedTVShow())
+              .thenThrow(TlsException());
+          // act
+          final theresult = await mockTvShowRepoImpl.getAllTopRatedTVShow();
+          // assert
+          verify(mockTvShowRemoteDataSource.getTopRatedTVShow());
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Get TV Show Detail', () {
@@ -235,6 +271,19 @@ void main() {
       expect(theresult,
           equals(Left(FailureConnection('Failed to connect to the network'))));
     });
+
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(mockTvShowRemoteDataSource.getTVShowDetail(testtvShowId))
+              .thenThrow(TlsException());
+          // act
+          final theresult = await mockTvShowRepoImpl.getTVShowDetail(testtvShowId);
+          // assert
+          verify(mockTvShowRemoteDataSource.getTVShowDetail(testtvShowId));
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Get TV Show Recommendations', () {
@@ -280,6 +329,19 @@ void main() {
       expect(theresult,
           equals(Left(FailureConnection('Failed to connect to the network'))));
     });
+
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(mockTvShowRemoteDataSource.getTVShowRecommendations(testIdTVShow))
+              .thenThrow(TlsException());
+          // act
+          final theresult = await mockTvShowRepoImpl.getAllTVShowRecommendations(testIdTVShow);
+          // assert
+          verify(mockTvShowRemoteDataSource.getTVShowRecommendations(testIdTVShow));
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
   group('Seach TV Show', () {
@@ -320,6 +382,19 @@ void main() {
       expect(
           theresult, Left(FailureConnection('Failed to connect to the network')));
     });
+
+    test(
+        'should return Certification Failure when the call to remote data source is unsuccessful',
+            () async {
+          // arrange
+          when(mockTvShowRemoteDataSource.searchTVShow(testTvShowQuery))
+              .thenThrow(TlsException());
+          // act
+          final theresult = await mockTvShowRepoImpl.searchTVSHow(testTvShowQuery);
+          // assert
+          verify(mockTvShowRemoteDataSource.searchTVShow(testTvShowQuery));
+          expect(theresult, equals(Left(FailureCommon('Certificated is not valid\n'))));
+        });
   });
 
 

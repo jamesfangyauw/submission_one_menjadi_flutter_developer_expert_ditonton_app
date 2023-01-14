@@ -12,13 +12,13 @@ import 'top_rated_movies_notifier_test.mocks.dart';
 
 @GenerateMocks([GetAllTopRatedMovies])
 void main() {
-  late GetTopRatedMoviesMock getTopRatedMoviesMock;
+  late MockGetAllTopRatedMovies getTopRatedMoviesMock;
   late TopRatedMoviesNotifier topRatedMoviesNotifier;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    getTopRatedMoviesMock = GetTopRatedMoviesMock();
+    getTopRatedMoviesMock = MockGetAllTopRatedMovies();
     topRatedMoviesNotifier = TopRatedMoviesNotifier(getTopRatedMovies: getTopRatedMoviesMock)
       ..addListener(() {
         countListenerCall++;

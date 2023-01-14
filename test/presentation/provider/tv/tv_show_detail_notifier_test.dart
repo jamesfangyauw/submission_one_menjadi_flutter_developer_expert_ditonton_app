@@ -17,27 +17,27 @@ import 'tv_show_detail_notifier_test.mocks.dart';
 
 @GenerateMocks([
   GetAllTVShowDetail,
-  GetTVShowRecommendations,
+  GetAllTVShowRecommendations,
   GetAllWatchListStatusTVShow,
   SaveAllWatchlistTVShow,
   RemoveAllWatchlistTVShow,
 ])
 void main() {
   late TVShowDetailNotifier tvShowDetailNotifier;
-  late GetTVShowDetailMock getTVShowDetailmock;
-  late GetTVShowRecommendationsMock getTVShowRecommendationsmock;
-  late GetWatchListTvShowStatusMock getWatchlistTvShowStatusmock;
-  late SaveWatchlistTvShowMock saveWatchlistTvShowmock;
-  late RemoveWatchlistTvShowMock removeWatchlistTvShowmock;
+  late MockGetAllTVShowDetail getTVShowDetailmock;
+  late MockGetTVShowRecommendations getTVShowRecommendationsmock;
+  late MockGetAllWatchListStatusTVShow getWatchlistTvShowStatusmock;
+  late MockSaveAllWatchlistTVShow saveWatchlistTvShowmock;
+  late MockRemoveAllWatchlistTVShow removeWatchlistTvShowmock;
   late int countListenerCall;
 
   setUp(() {
     countListenerCall = 0;
-    getTVShowDetailmock = GetTVShowDetailMock();
-    getTVShowRecommendationsmock = GetTVShowRecommendationsMock();
-    getWatchlistTvShowStatusmock = GetWatchListTvShowStatusMock();
-    saveWatchlistTvShowmock = SaveWatchlistTvShowMock();
-    removeWatchlistTvShowmock = RemoveWatchlistTvShowMock();
+    getTVShowDetailmock = MockGetAllTVShowDetail();
+    getTVShowRecommendationsmock = MockGetTVShowRecommendations();
+    getWatchlistTvShowStatusmock = MockGetAllWatchListStatusTVShow();
+    saveWatchlistTvShowmock = MockSaveAllWatchlistTVShow();
+    removeWatchlistTvShowmock = MockRemoveAllWatchlistTVShow();
     tvShowDetailNotifier = TVShowDetailNotifier(
       getAllTVShowDetail: getTVShowDetailmock,
       getAllTVShowRecommendations: getTVShowRecommendationsmock,

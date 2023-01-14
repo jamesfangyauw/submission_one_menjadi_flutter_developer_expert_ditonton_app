@@ -14,3 +14,7 @@ class FailureConnection extends FailureEquitable {
 class FailureDB extends FailureEquitable {
   FailureDB(String mssg) : super(mssg);
 }
+class FailureCommon extends FailureEquitable {
+   FailureCommon(String mssg) : super(mssg);
+}
+

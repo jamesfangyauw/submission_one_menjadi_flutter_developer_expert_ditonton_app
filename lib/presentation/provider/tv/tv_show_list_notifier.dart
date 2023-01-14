@@ -35,7 +35,7 @@ class TVShowListNotifier extends ChangeNotifier {
 
   final GetAllNowPlayingTVShow getAllNowPlayingTVShow;
   final GetAllPopularTVShow getAllPopularTVShow;
-  final GetTopRatedTV getAllTopRatedTVShow;
+  final GetTopRatedTVShow getAllTopRatedTVShow;
 
   Future<void> fetchNowPlayingTVShow() async {
     _tvShowNowPlayingState = EnumStateRequest.DataLoading;

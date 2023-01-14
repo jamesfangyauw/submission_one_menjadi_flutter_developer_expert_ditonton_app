@@ -19,7 +19,7 @@ void main() {
     test('should throw DatabaseException when insert to database is failed',
         () async {
       // arrange
-      when(mockDBHelper.addWatchlist(testTheMovieTable))
+      when(mockDBHelper.addWatchlistMovie(testTheMovieTable))
           .thenThrow(Exception());
       // act
       final mssgcall = movieLocalDSImpl.addWatchlist(testTheMovieTable);

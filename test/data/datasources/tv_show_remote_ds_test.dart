@@ -15,10 +15,10 @@ void main() {
   const URL_BASE = 'https://api.themoviedb.org/3';
 
   late TVShowRemoteDSImpl tvShowRemoteDSImpl;
-  late HttpClientTvShowMock tvShowHttpClientMock;
+  late MockHttpClient tvShowHttpClientMock;
 
   setUp(() {
-    tvShowHttpClientMock = HttpClientTvShowMock();
+    tvShowHttpClientMock = MockHttpClient();
     tvShowRemoteDSImpl = TVShowRemoteDSImpl(clientHTTP: tvShowHttpClientMock);
   });
 

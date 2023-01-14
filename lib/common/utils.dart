@@ -1,6 +1,7 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/domain/entities/genre_entities.dart';
-
+import 'package:rxdart/transformers.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/constants.dart';
 
 final RouteObserver<ModalRoute> obsrvrRouteUtil = RouteObserver<ModalRoute>();
@@ -33,4 +34,8 @@ String convertion(totalHrs,totalMnts){
   } else {
     return '${totalMnts}m';
   }
+}
+
+EventTransformer<T> dbounce<T>(Duration drtion) {
+  return (evnt, mppr) => evnt.debounceTime(drtion).flatMap(mppr);
 }

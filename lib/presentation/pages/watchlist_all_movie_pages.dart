@@ -3,8 +3,10 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/com
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/utils.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/widgets/movie_card_list.dart';
+import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/cubit/all_the_movies_watchlist_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WatchlistAllMoviePages extends StatefulWidget {
   static const NAME_ROUTE = '/movie-watchlist';
@@ -18,9 +20,12 @@ class _WatchlistAllMoviePagesState extends State<WatchlistAllMoviePages>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistMovieNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
+    Future.microtask(
+        //     () =>
+        // Provider.of<WatchlistMovieNotifier>(context, listen: false)
+        //     .fetchWatchlistMovies()
+          () => BlocProvider.of<AllTheMovieWatchlistCubit>(context).fetchAllTheMovieWatchlistCubit(),
+    );
   }
 
   @override
@@ -30,8 +35,9 @@ class _WatchlistAllMoviePagesState extends State<WatchlistAllMoviePages>
   }
 
   void didPopNext() {
-    Provider.of<WatchlistMovieNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
+    // Provider.of<WatchlistMovieNotifier>(context, listen: false)
+    //     .fetchWatchlistMovies();
+    BlocProvider.of<AllTheMovieWatchlistCubit>(context).fetchAllTheMovieWatchlistCubit();
   }
 
   @override
@@ -42,25 +48,33 @@ class _WatchlistAllMoviePagesState extends State<WatchlistAllMoviePages>
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistMovieNotifier>(
-          builder: (cntxt, dt, chld) {
-            if (dt.watchlistState == EnumStateRequest.DataLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (dt.watchlistState == EnumStateRequest.DataLoaded) {
+        // child: Consumer<WatchlistMovieNotifier>(
+        //   builder: (cntxt, dt, chld) {
+        //     if (dt.watchlistState == EnumStateRequest.DataLoading) {
+        //       return Center(
+        //         child: CircularProgressIndicator(),
+        //       );
+        //     } else if (dt.watchlistState == EnumStateRequest.DataLoaded) {
+        child:
+        BlocBuilder<AllTheMovieWatchlistCubit, AllTheMovieWatchlistState>(
+          builder: (cntxt, stt) {
+            if (stt is AllTheMovieWatchlistLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (stt is AllTheMovieWatchlistLoadedState) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = dt.watchlistMovies[index];
-                  return MovieCard(movie);
+                  final themovie = stt.movies[index];
+                  return MovieCardList(themovie: themovie);
                 },
-                itemCount: dt.watchlistMovies.length,
+                itemCount: stt.movies.length,
+              );
+            } else if (stt is AllTheMovieWatchlistErrorState) {
+              return Center(
+                key: const Key('error_message'),
+                child: Text(stt.mssg),
               );
             } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(dt.message),
-              );
+              return Container();
             }
           },
         ),

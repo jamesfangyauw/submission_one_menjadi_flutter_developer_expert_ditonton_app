@@ -18,26 +18,26 @@ import 'movie_detail_notifier_test.mocks.dart';
 @GenerateMocks([
   GetAllMovieDetail,
   GetAllMovieRecommendations,
-  GetAllWatchListTvShowStatus,
-  SaveAllWatchlistTvShow,
-  RemoveAllWatchlistTvShow,
+  GetAllWatchListTheMoviesStatus,
+  SaveAllWatchListTheMovies,
+  RemoveAllWatchlistTheMovies,
 ])
 void main() {
   late AllMovieDetailNotifier movieDetailNotifier;
-  late MockGetMovieDetail mockGetMovieDetail;
-  late MockGetMovieRecommendations mockGetMovieRecommendations;
-  late MockGetWatchListStatus mockGetWatchlistStatus;
-  late MockSaveWatchlist mockSaveWatchlist;
-  late MockRemoveWatchlist mockRemoveWatchlist;
+  late MockGetAllMovieDetail mockGetMovieDetail;
+  late MockGetAllMovieRecommendations mockGetMovieRecommendations;
+  late MockGetAllWatchListTheMoviesStatus mockGetWatchlistStatus;
+  late MockSaveAllWatchListTheMovies mockSaveWatchlist;
+  late MockRemoveAllWatchlistTheMovies mockRemoveWatchlist;
   late int countlistenerCall;
 
   setUp(() {
     countlistenerCall = 0;
-    mockGetMovieDetail = MockGetMovieDetail();
-    mockGetMovieRecommendations = MockGetMovieRecommendations();
-    mockGetWatchlistStatus = MockGetWatchListStatus();
-    mockSaveWatchlist = MockSaveWatchlist();
-    mockRemoveWatchlist = MockRemoveWatchlist();
+    mockGetMovieDetail = MockGetAllMovieDetail();
+    mockGetMovieRecommendations = MockGetAllMovieRecommendations();
+    mockGetWatchlistStatus = MockGetAllWatchListTheMoviesStatus();
+    mockSaveWatchlist = MockSaveAllWatchListTheMovies();
+    mockRemoveWatchlist = MockRemoveAllWatchlistTheMovies();
     movieDetailNotifier = AllMovieDetailNotifier(
       getMovieDetail: mockGetMovieDetail,
       getMovieRecommendations: mockGetMovieRecommendations,
