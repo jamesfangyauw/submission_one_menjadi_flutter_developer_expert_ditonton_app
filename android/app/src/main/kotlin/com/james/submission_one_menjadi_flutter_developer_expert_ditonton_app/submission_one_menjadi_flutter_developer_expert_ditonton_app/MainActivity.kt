@@ -1,0 +1,6 @@
+package com.james.submission_one_menjadi_flutter_developer_expert_ditonton_app.submission_one_menjadi_flutter_developer_expert_ditonton_app
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
