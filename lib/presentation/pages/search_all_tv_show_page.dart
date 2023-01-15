@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/constants.dart';
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/common/request_state_enum.dart';
@@ -6,6 +7,9 @@ import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/pre
 import 'package:submission_one_menjadi_flutter_developer_expert_ditonton_app/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+
 
 class SearchAllTvShowPage extends StatelessWidget {
   static const NAME_ROUTE = '/search-tv-show-page';
@@ -20,11 +24,14 @@ class SearchAllTvShowPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
+
               onChanged: (thequery) {
+                // FirebaseCrashlytics.instance.crash();
                 // Provider.of<TVShowSearchNotifier>(ctx, listen: false)
                 //     .fetchTVShowSearch(thequery);
                 BlocProvider.of<SearchTVShowBloc>(ctx)
                     .add(SearchTVShowAction(thequery));
+
               },
               decoration: InputDecoration(
                 hintText: TV_SEARCH,
@@ -33,6 +40,7 @@ class SearchAllTvShowPage extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(vertical: 5.0),
               ),
               textInputAction: TextInputAction.search,
+
             ),
             Text(
               SEARCH_RESULT,

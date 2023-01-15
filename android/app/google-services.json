@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "168849300029",
+    "project_id": "submission-flutter-exper-6dfa8",
+    "storage_bucket": "submission-flutter-exper-6dfa8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168849300029:android:f5d94c10ad70652f652854",
+        "android_client_info": {
+          "package_name": "com.james.submission_one_menjadi_flutter_developer_expert_ditonton_app.submission_one_menjadi_flutter_developer_expert_ditonton_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168849300029-7dqf9v0k4msf93tijcj3945d3g8qve3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGUXOh86YwahqJfsgm91HFkdFSgmVuDY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168849300029-7dqf9v0k4msf93tijcj3945d3g8qve3t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "168849300029-ufl45vehm2e84v3fknoon80p4l0sbhmg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.james.submissiononemenjadiflutterdeveloperexpertditontonapp.submissionOneMenjadiFlutterDeveloperExpertDitontonApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
