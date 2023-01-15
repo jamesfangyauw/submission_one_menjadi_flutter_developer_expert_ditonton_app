@@ -1,6 +1,8 @@
-# submission_one_menjadi_flutter_developer_expert_ditonton_app
+[![Codemagic build status](https://api.codemagic.io/apps/63c2e2d876fcc88da50a1cbe/63c2e2d876fcc88da50a1cbd/status_badge.svg)](https://codemagic.io/apps/63c2e2d876fcc88da50a1cbe/63c2e2d876fcc88da50a1cbd/latest_build)
 
-My Submission One of Menjadi Flutter Developer Expert Dicoding Class
+# submission_one_menjadi_flutter_developer_expert
+
+Final Project of Menjadi Flutter Developer Expert Dicoding Class
 
 ## Getting Started
 
